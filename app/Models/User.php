@@ -26,9 +26,37 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Article::class);
     }
 
+    public function favorite(Article $article): void
+    {
+        if (!$this->doesUserFollowArticle($this->id, $article->id)) {
+            $this->favoritedArticles()->attach($article);
+        }
+    }
+
+    public function unFavorite(Article $article): void
+    {
+        if ($this->doesUserFollowArticle($this->id, $article->id)) {
+            $this->favoritedArticles()->detach($article);
+        }
+    }
+
     public function favoritedArticles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class);
+    }
+
+    public function follow(User $user): void
+    {
+        if (!$this->doesUserFollowAnotherUser($this->id, $user->id)) {
+            $this->following()->attach($user);
+        }
+    }
+
+    public function unFollow(User $user): void
+    {
+        if ($this->doesUserFollowAnotherUser($this->id, $user->id)) {
+            $this->following()->detach($user);
+        }
     }
 
     public function followers(): BelongsToMany

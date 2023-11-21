@@ -24,6 +24,12 @@ composer install
 cp .env.example .env
 ```
 
+Migration and DB seeder (after changing your DB settings in .env)
+
+```
+php artisan migrate:fresh --seed
+```
+
 Run the web server
 
 ```
