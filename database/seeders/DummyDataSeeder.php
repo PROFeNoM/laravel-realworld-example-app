@@ -28,6 +28,8 @@ class DummyDataSeeder extends Seeder
      */
     public function run(\Faker\Generator $faker)
     {
+        $faker->seed(42);
+
         $this->command->info('Populating the database with dummy data...');
 
         $this->command->info('Creating users...');
